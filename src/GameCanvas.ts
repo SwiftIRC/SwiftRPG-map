@@ -7,17 +7,18 @@ export class GameCanvas {
   ctx: CanvasRenderingContext2D
   background: string
   gridManager: GridManager
+  cameraZoom = 1
 
   constructor(App: App, tiles: Tile[]) {
     this.element = App.document.createElement('canvas')
     App.container.appendChild(this.element)
+    this.element.addEventListener('wheel', e => this.zoomHandler(e))
     this.element.width = App.container.getBoundingClientRect().width
     this.element.height = App.container.getBoundingClientRect().height
     this.background = "#8f7f67"
     this.ctx = this.element.getContext('2d')!
     this.gridManager = new GridManager(this.center, 250, 20)
     this.gridManager.setTiles(tiles)
-    this.draw()
   }
 
   get width() {
@@ -36,8 +37,12 @@ export class GameCanvas {
   }
 
   draw(): void {
-    this.ctx.fillStyle = this.background
-    this.ctx.fillRect(0, 0, this.width, this.height)
+    console.log("I Am Drawing")
+    this.clearCanvas()
+    this.ctx.translate( this.center.x, this.center.y)
+    console.log("scale: ", this.cameraZoom)
+    this.ctx.scale(this.cameraZoom, this.cameraZoom)
+    this.ctx.translate( -this.center.x, -this.center.y)
 
     this.gridManager.tileGrid.forEach(tile => {
       this.drawTile(tile)
@@ -93,6 +98,26 @@ export class GameCanvas {
       this.ctx.lineTo(tree.x, tree.y - 20)
       this.ctx.fill()
     }
+  }
+
+  clearCanvas(): void {
+    this.ctx.resetTransform()
+    this.ctx.translate(0, 0)
+    this.ctx.clearRect(0, 0, this.width, this.height)
+    this.ctx.fillStyle = this.background
+    this.ctx.fillRect(0, 0, this.width, this.height)
+  }
+
+  zoomHandler(e: WheelEvent): void {
+    const modifier = e.deltaY * 0.0003
+    console.log("deltaY: ", modifier)
+    this.clearCanvas()
+    const newZoomLevel = this.cameraZoom + modifier
+    if (newZoomLevel > 0.05 && newZoomLevel < 2) {
+      console.log(`Camera Zoom: ${newZoomLevel}`)
+      this.cameraZoom = newZoomLevel
+    }
+    this.draw()
   }
 
   drawRoad(tile: MappedTile): void {
