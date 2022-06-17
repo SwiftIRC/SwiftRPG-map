@@ -24,7 +24,7 @@ async function main(): Promise<void> {
   <a href="https://rpg.swiftirc.net/hiscores" target="_blank">HiScores</a>
 `
 
-  const tileDataRequest = await axios.get('/api/tiles')
+  const tileDataRequest = await axios.get(`${import.meta.env.VITE_APP_API_BASE_URL}/api/tiles`)
   const tileData = tileDataRequest.data as Tile[]
 
   const app = new App(appContainer, document, tileData)
