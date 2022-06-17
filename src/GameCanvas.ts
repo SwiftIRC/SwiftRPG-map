@@ -36,10 +36,9 @@ export class GameCanvas {
     }
   }
 
-  draw(): void {
+  draw(x: number = this.center.x, y: number = this.center.y): void {
     console.log("I Am Drawing")
-    this.clearCanvas()
-    this.ctx.translate( this.center.x, this.center.y)
+    this.ctx.translate( x , y)
     console.log("scale: ", this.cameraZoom)
     this.ctx.scale(this.cameraZoom, this.cameraZoom)
     this.ctx.translate( -this.center.x, -this.center.y)
@@ -117,7 +116,7 @@ export class GameCanvas {
       console.log(`Camera Zoom: ${newZoomLevel}`)
       this.cameraZoom = newZoomLevel
     }
-    this.draw()
+    this.draw(e.clientX, e.clientY - (this.gridManager.tileSize / 2.50))
   }
 
   drawRoad(tile: MappedTile): void {
