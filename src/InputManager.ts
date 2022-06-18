@@ -8,4 +8,12 @@ export class InputManager {
     this._canvasManager = canvasManager;
   }
 
+  onWheel(event: WheelEvent) {
+    if (event.deltaY < 0) {
+      this._canvasManager.cameraZoom += this.zoomSpeed;
+    } else {
+      this._canvasManager.cameraZoom -= this.zoomSpeed;
+    }
+  }
+
 }

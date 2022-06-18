@@ -65,17 +65,16 @@ export class CanvasManager {
       );
     });
     this._inputManager = new InputManager(this);
+    this._canvas.addEventListener('wheel', (e: WheelEvent) => this._inputManager.onWheel(e))
   }
 
   draw(deltaTime: number = 0): void {
-    this._ctx.resetTransform();
-    this._ctx.scale(this.cameraZoom, this.cameraZoom)
     const newDeltaTime = performance.now() - this._lastFrameTime;
     if (this._isplaying && deltaTime >= 1000 / this._frameRate) {
+      this.clear();
+      this._ctx.scale(this.cameraZoom, this.cameraZoom);
       this._lastFrameTime = performance.now();
       console.log("I Am Drawing");
-      this.clear();
-      this.drawBackground();
       this._tiles.forEach((tile) => {
         tile.draw();
       })
@@ -95,12 +94,13 @@ export class CanvasManager {
   // Draw a dot on the center of the canvas
   private _drawCenterPoint(size: number, color: string): void {
     this._ctx.fillStyle = color;
-    this._ctx.arc(this.centerPoint.x, this.centerPoint.y, size / 2, 0, 2 * Math.PI);
+    this._ctx.fillRect(this.centerPoint.x, this.centerPoint.y, size, size)
     this._ctx.fill();
   }
 
   clear(): void {
-    this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
+    this._ctx.resetTransform();
+    this.drawBackground();
   }
 
   drawFPS(fps: number): void {
