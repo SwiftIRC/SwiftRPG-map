@@ -64,22 +64,32 @@ export class CanvasManager {
         )
       );
     });
+    //this.cameraPan = this.centerPoint;
     this._inputManager = new InputManager(this);
     this._canvas.addEventListener('wheel', (e: WheelEvent) => this._inputManager.onWheel(e))
+    this._canvas.addEventListener('mousemove', (e: MouseEvent) => this._inputManager.onMouseMove(e))
+    this._canvas.addEventListener('mousedown', (e: MouseEvent) => this._inputManager.onMouseDown(e))
+    this._canvas.addEventListener('mouseup', (e: MouseEvent) => this._inputManager.onMouseUp(e))
   }
 
   draw(deltaTime: number = 0): void {
     const newDeltaTime = performance.now() - this._lastFrameTime;
     if (this._isplaying && deltaTime >= 1000 / this._frameRate) {
       this.clear();
-      this._ctx.scale(this.cameraZoom, this.cameraZoom);
+      this._ctx.scale(
+        this._inputManager.inputScale,
+        this._inputManager.inputScale
+      );
+      this._ctx.translate(
+        (this._inputManager.inputTartget.x + (this.centerPoint.x * this._inputManager.inputScale)) - (this.centerPoint.x * this._inputManager.inputScale),
+        (this._inputManager.inputTartget.y + (this.centerPoint.y * this._inputManager.inputScale)) - (this.centerPoint.y * this._inputManager.inputScale)
+        );
       this._lastFrameTime = performance.now();
-      console.log("I Am Drawing");
       this._tiles.forEach((tile) => {
         tile.draw();
       })
       this._drawCenterPoint(5, "purple");
-      this.drawFPS(1000 / newDeltaTime);
+      //this.drawFPS(1000 / newDeltaTime);
     }
     window.requestAnimationFrame(() => this.draw(newDeltaTime));
   }
@@ -101,6 +111,7 @@ export class CanvasManager {
   clear(): void {
     this._ctx.resetTransform();
     this.drawBackground();
+    this._ctx.resetTransform();
   }
 
   drawFPS(fps: number): void {

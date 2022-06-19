@@ -71,7 +71,6 @@ export class Tile {
       this._gridOptions.tileSize,
       this._gridOptions.tileSize
     );
-    console.log(this.treeMap);
     this._drawTrees();
   }
 
