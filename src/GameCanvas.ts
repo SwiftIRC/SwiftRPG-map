@@ -38,10 +38,10 @@ export class GameCanvas {
 
   draw(x: number = this.center.x, y: number = this.center.y): void {
     console.log("I Am Drawing")
-    this.ctx.translate( x , y)
+    this.ctx.translate(x, y)
     console.log("scale: ", this.cameraZoom)
     this.ctx.scale(this.cameraZoom, this.cameraZoom)
-    this.ctx.translate( -this.center.x, -this.center.y)
+    this.ctx.translate(-this.center.x, -this.center.y)
 
     this.gridManager.tileGrid.forEach(tile => {
       this.drawTile(tile)
@@ -55,14 +55,24 @@ export class GameCanvas {
   }
 
   drawTile(tile: MappedTile): void {
-    this.ctx.fillStyle = "#8ab06d"
+    let water = false;
+    tile.tile.terrains.forEach(terrain => {
+      if (terrain.name == "Water") {
+        water = true;
+      }
+    });
+    if (!water) {
+      this.ctx.fillStyle = "#8ab06d"
+    } else {
+      this.ctx.fillStyle = "#1ca3ec"
+    }
     this.ctx.fillRect(tile.x, tile.y, this.gridManager.tileSize, this.gridManager.tileSize)
     this.drawRoad(tile)
     const treeMap = this.generateTreeMap(tile, tile.tile.max_trees, (tile.tile.max_trees - tile.tile.available_trees))
     treeMap.forEach(tree => {
       this.drawTree(tree)
     })
-    
+
   }
 
   generateTreeMap(tile: MappedTile, trees: number, cut: number): Tree[] {

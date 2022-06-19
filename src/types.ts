@@ -11,33 +11,38 @@ export type Tile = {
     available_trees: number;
     npcs: number
     buildings: number
-    edges: [{
+    edges: [
+        {
+            name: string;
+            pivot: {
+                is_road: boolean;
+                direction: "north" | "east" | "south" | "west";
+            }
+        },
+        {
+            name: string;
+            pivot: {
+                is_road: boolean;
+                direction: "north" | "east" | "south" | "west";
+            }
+        },
+        {
+            name: string;
+            pivot: {
+                is_road: boolean;
+                direction: "north" | "east" | "south" | "west";
+            }
+        },
+        {
+            name: string;
+            pivot: {
+                is_road: boolean;
+                direction: "north" | "east" | "south" | "west";
+            }
+        }],
+    terrains: [{
         name: string;
-        pivot: {
-            is_road: boolean;
-            direction: "north" | "east" | "south" | "west";
-        }
-    },
-    {
-        name: string;
-        pivot: {
-            is_road: boolean;
-            direction: "north" | "east" | "south" | "west";
-        }
-    },
-    {
-        name: string;
-        pivot: {
-            is_road: boolean;
-            direction: "north" | "east" | "south" | "west";
-        }
-    },
-    {
-        name: string;
-        pivot: {
-            is_road: boolean;
-            direction: "north" | "east" | "south" | "west";
-        }
+        description: string;
     }]
 }
 
