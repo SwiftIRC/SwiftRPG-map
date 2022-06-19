@@ -127,22 +127,22 @@ export class GameCanvas {
         if (edge.pivot.direction === 'north') {
           this.ctx.beginPath()
           this.ctx.moveTo(tile.x + (this.gridManager.tileSize / 2), tile.y)
-          this.ctx.lineTo(tile.x + (this.gridManager.tileSize / 2), tile.y + (this.gridManager.tileSize / 4))
+          this.ctx.lineTo(tile.x + (this.gridManager.tileSize / 2), tile.y + (this.gridManager.tileSize / 2))
           this.ctx.stroke()
         } else if (edge.pivot.direction === 'east') {
           this.ctx.beginPath()
           this.ctx.moveTo(tile.x + this.gridManager.tileSize, tile.y + (this.gridManager.tileSize / 2))
-          this.ctx.lineTo(tile.x + this.gridManager.tileSize - (this.gridManager.tileSize / 4), tile.y + (this.gridManager.tileSize / 2))
+          this.ctx.lineTo(tile.x + this.gridManager.tileSize - (this.gridManager.tileSize / 2), tile.y + (this.gridManager.tileSize / 2))
           this.ctx.stroke()
         } else if (edge.pivot.direction === 'south') {
           this.ctx.beginPath()
           this.ctx.moveTo(tile.x + (this.gridManager.tileSize / 2), tile.y + this.gridManager.tileSize)
-          this.ctx.lineTo(tile.x + (this.gridManager.tileSize / 2), tile.y + this.gridManager.tileSize - (this.gridManager.tileSize / 4))
+          this.ctx.lineTo(tile.x + (this.gridManager.tileSize / 2), tile.y + this.gridManager.tileSize - (this.gridManager.tileSize / 2))
           this.ctx.stroke()
         } else if (edge.pivot.direction === 'west') {
           this.ctx.beginPath()
           this.ctx.moveTo(tile.x, tile.y + (this.gridManager.tileSize / 2))
-          this.ctx.lineTo(tile.x + (this.gridManager.tileSize / 4), tile.y + (this.gridManager.tileSize / 2))
+          this.ctx.lineTo(tile.x + (this.gridManager.tileSize / 2), tile.y + (this.gridManager.tileSize / 2))
           this.ctx.stroke()
         }
       }
