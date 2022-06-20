@@ -11,24 +11,25 @@ export class CanvasManager {
   public gridOptions: GridOptions = {
     tileSize: 100,
     borderSize: 10,
-    center: {x: 0 , y:0}
   };
+  private _originalWidth: number;
+  private _originalHeight: number;
   private _frameRate: number = 60;
   private _lastFrameTime: number = performance.now() - 1000;
   public _isplaying: boolean = true;
-  public cameraZoom = 1;
-  public cameraPan: Coordinate = { x: 0, y: 0 };
 
   constructor(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
     background: string,
+
     tileData: TileAPIResponse[]
   ) {
     this._canvas = canvas;
     this._ctx = ctx;
     this._background = background;
-    this.gridOptions.center = this.centerPoint
+    this._originalHeight = this._canvas.height;
+    this._originalWidth = this._canvas.width;
     tileData.forEach((tile) => {
       this._tiles.push(
         new Tile(
@@ -65,29 +66,34 @@ export class CanvasManager {
       );
     });
     //this.cameraPan = this.centerPoint;
-    this._inputManager = new InputManager(this);
-    this._canvas.addEventListener('wheel', (e: WheelEvent) => this._inputManager.onWheel(e))
-    this._canvas.addEventListener('mousemove', (e: MouseEvent) => this._inputManager.onMouseMove(e))
-    this._canvas.addEventListener('mousedown', (e: MouseEvent) => this._inputManager.onMouseDown(e))
-    this._canvas.addEventListener('mouseup', (e: MouseEvent) => this._inputManager.onMouseUp(e))
+    this._inputManager = new InputManager(this.centerPoint);
+    this._canvas.addEventListener("wheel", (e: WheelEvent) =>
+      this._inputManager.onWheel(e)
+    );
+    this._canvas.addEventListener("mousemove", (e: MouseEvent) =>
+      this._inputManager.onMouseMove(e)
+    );
+    this._canvas.addEventListener("mousedown", (e: MouseEvent) =>
+      this._inputManager.onMouseDown(e)
+    );
+    this._canvas.addEventListener("mouseup", (e: MouseEvent) =>
+      this._inputManager.onMouseUp(e)
+    );
   }
 
   draw(deltaTime: number = 0): void {
     const newDeltaTime = performance.now() - this._lastFrameTime;
     if (this._isplaying && deltaTime >= 1000 / this._frameRate) {
       this.clear();
-      this._ctx.scale(
-        this._inputManager.inputScale,
-        this._inputManager.inputScale
-      );
-      this._ctx.translate(
-        (this._inputManager.inputTartget.x + (this.centerPoint.x * this._inputManager.inputScale)) - (this.centerPoint.x * this._inputManager.inputScale),
-        (this._inputManager.inputTartget.y + (this.centerPoint.y * this._inputManager.inputScale)) - (this.centerPoint.y * this._inputManager.inputScale)
-        );
+      this._drawDebug();
+      this._drawCenterPoint(3, "blue");
+      this._ctx.translate(this.cameraPan().x, this.cameraPan().y);
+      this._ctx.scale(this._inputManager.scale, this._inputManager.scale);
+      this._drawDebug();
       this._lastFrameTime = performance.now();
       this._tiles.forEach((tile) => {
         tile.draw();
-      })
+      });
       this._drawCenterPoint(5, "purple");
       //this.drawFPS(1000 / newDeltaTime);
     }
@@ -95,16 +101,17 @@ export class CanvasManager {
   }
 
   get centerPoint(): Coordinate {
-    return {
+    const coord = {
       x: this._canvas.width / 2,
       y: this._canvas.height / 2,
     };
+    return coord;
   }
 
   // Draw a dot on the center of the canvas
   private _drawCenterPoint(size: number, color: string): void {
     this._ctx.fillStyle = color;
-    this._ctx.fillRect(this.centerPoint.x, this.centerPoint.y, size, size)
+    this._ctx.fillRect(this.centerPoint.x, this.centerPoint.y, size, size);
     this._ctx.fill();
   }
 
@@ -120,8 +127,22 @@ export class CanvasManager {
     this._ctx.fillText(`FPS: ${Math.round(fps)}`, 10, 10);
   }
 
+  private _drawDebug(): void {
+    this._ctx.strokeStyle = "purple";
+    this._ctx.strokeRect(0, 0, this._canvas.width, this._canvas.height);
+  }
+
   drawBackground(): void {
-     this._ctx.fillStyle = this._background;
-     this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
+    this._ctx.fillStyle = this._background;
+    this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
+  }
+
+  private cameraPan(): Coordinate {
+    const mappedX = this._inputManager.offset.x - this._canvas.width / 2;
+    const mappedY = this._inputManager.offset.y - this._canvas.height / 2;
+    return {
+      x:  this.centerPoint.x + mappedX,
+      y:  this.centerPoint.y + mappedY,
+    };
   }
 }

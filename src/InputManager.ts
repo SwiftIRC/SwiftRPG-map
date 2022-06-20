@@ -1,21 +1,22 @@
-import { CanvasManager } from "./CanvasManager";
 import { Coordinate } from "./types";
 
 export class InputManager {
   public zoomSpeed = 0.1;
-  private _canvasManager: CanvasManager;
   private _isMouseDown: boolean = false;
-  public inputTartget: Coordinate = { x: 0, y: 0 };
-  public inputScale = 1;
+  public offset: Coordinate = { x: 0, y: 0 };
+  // For some reason the click event seems to be about 87 px off.
+  // This is likely a bug that differs between different screens and devices.
+  // This is a workaround to get the correct click position temporarily
+  private _fixY = -87
 
-  constructor(canvasManager: CanvasManager) {
-    this._canvasManager = canvasManager;
+  public scale = 1;
+
+  constructor(center: Coordinate) {
+    this.offset = center;
   }
 
   onWheel(event: WheelEvent) {
-    console.log("wheel", event.deltaY);
-    this.inputScale += 0.0005 * event.deltaY;
-    this.inputTartget = { x: event.clientX, y: event.clientY };
+    this.scale += 0.0005 * event.deltaY;
   }
 
   get isMouseDown() {
@@ -23,18 +24,18 @@ export class InputManager {
   }
 
   onMouseDown(event: MouseEvent) {
+    console.log("Clicked: " + event.clientX + "," + (event.clientY + this._fixY));
+    this.offset = { x: event.clientX, y: event.clientY + this._fixY };
     this._isMouseDown = true;
-    this.inputTartget = { x: event.clientX, y: event.clientY };
   }
 
   onMouseUp(event: MouseEvent) {
     this._isMouseDown = false;
-    this.inputTartget = { x: event.clientX, y: event.clientY };
   }
 
   onMouseMove(event: MouseEvent) {
     if (this._isMouseDown) {
-      this.inputTartget = { x: event.clientX, y: event.clientY };
+      this.offset = { x: event.clientX, y: event.clientY + this._fixY };
     }
   }
 }

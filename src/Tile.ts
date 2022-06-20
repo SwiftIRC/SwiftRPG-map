@@ -66,43 +66,39 @@ export class Tile {
   public draw(): void {
     this._ctx.fillStyle = "#72ad51";
     this._ctx.fillRect(
-      this.mappedPosition.x,
-      this.mappedPosition.y,
+      this._getMappedPosition().x,
+      this._getMappedPosition().y,
       this._gridOptions.tileSize,
       this._gridOptions.tileSize
     );
     this._drawTrees();
   }
 
-  get mappedPosition(): Coordinate {
+  private _getMappedPosition(): Coordinate {
     return {
       x:
-        this.x * this._gridOptions.tileSize +
-        this._gridOptions.center.x -
+        this.x * this._gridOptions.tileSize -
         this._gridOptions.tileSize / 2 +
         (this._gridOptions.borderSize * this.x) / 2,
       y:
-        this.y * this._gridOptions.tileSize +
-        this._gridOptions.center.y -
+        this.y * this._gridOptions.tileSize -
         this._gridOptions.tileSize / 2 +
         (this._gridOptions.borderSize * this.y) / 2,
     };
   }
 
-
   private _drawTrees(): void {
     this.treeMap.forEach((tree) => {
       this._ctx.save();
       this._ctx.translate(
-        this.mappedPosition.x + tree.x + SVGTree.top.offset.x,
-        this.mappedPosition.y + tree.y + SVGTree.top.offset.y
+        this._getMappedPosition().x + tree.x + SVGTree.top.offset.x,
+        this._getMappedPosition().y + tree.y + SVGTree.top.offset.y
       );
       this._ctx.fillStyle = SVGTree.top.fill;
       this._ctx.fill(SVGTree.top.path);
       this._ctx.fillStyle = SVGTree.trunk.fill;
       this._ctx.fill(SVGTree.trunk.path);
       this._ctx.restore();
-    })
+    });
   }
-
 }

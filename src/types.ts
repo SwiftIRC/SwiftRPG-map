@@ -60,5 +60,4 @@ export type TileEdge = {
 export type GridOptions = {
   tileSize: number;
   borderSize: number;
-  center: Coordinate;
 };
