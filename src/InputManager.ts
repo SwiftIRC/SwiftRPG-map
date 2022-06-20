@@ -1,9 +1,10 @@
 import { Coordinate } from "./types";
 
 export class InputManager {
-  public zoomSpeed = 0.1;
   private _isMouseDown: boolean = false;
   public offset: Coordinate = { x: 0, y: 0 };
+  private _wheelSensitivity = 0.0003;
+  private _minScale = 0.009;
   // For some reason the click event seems to be about 87 px off.
   // This is likely a bug that differs between different screens and devices.
   // This is a workaround to get the correct click position temporarily
@@ -16,7 +17,11 @@ export class InputManager {
   }
 
   onWheel(event: WheelEvent) {
-    this.scale += 0.0005 * event.deltaY;
+    console.log("Curent Scale: " + this.scale);
+    if (this.scale + (this._wheelSensitivity * event.deltaY) > this._minScale) {
+      this.scale += (this._wheelSensitivity * this.scale) * event.deltaY;
+    }
+    
   }
 
   get isMouseDown() {
