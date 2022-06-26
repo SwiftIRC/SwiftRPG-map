@@ -55,9 +55,25 @@ export type TileEdge = {
   name: string;
   is_road: boolean;
   direction: TileEdgeDirection;
+  _roadCoord: Coordinate;
 };
 
 export type GridOptions = {
   tileSize: number;
   borderSize: number;
 };
+
+export const TileEdgeDirectionMap = {
+  north: {
+    x: 0, y: -1,
+  },
+  east: {
+    x: 1, y: 0,
+  },
+  south: {
+    x: 0, y: 1,
+  },
+  west: {
+    x: -1, y: 0,
+  },
+}

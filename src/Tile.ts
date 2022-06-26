@@ -71,7 +71,15 @@ export class Tile {
       this._gridOptions.tileSize,
       this._gridOptions.tileSize
     );
+    this._drawRoads();
     this._drawTrees();
+  }
+
+  private get _centerPoint(): Coordinate {
+    return {
+      x: this._getMappedPosition().x + this._gridOptions.tileSize / 2,
+      y: this._getMappedPosition().y + this._gridOptions.tileSize / 2,
+    };
   }
 
   private _getMappedPosition(): Coordinate {
@@ -81,8 +89,8 @@ export class Tile {
         this._gridOptions.tileSize / 2 +
         (this._gridOptions.borderSize * this.x) / 2,
       y:
-        this.y * this._gridOptions.tileSize -
-        this._gridOptions.tileSize / 2 +
+        this.y * -1 * this._gridOptions.tileSize +
+        this._gridOptions.tileSize / 2 -
         (this._gridOptions.borderSize * this.y) / 2,
     };
   }
@@ -100,5 +108,37 @@ export class Tile {
       this._ctx.fill(SVGTree.trunk.path);
       this._ctx.restore();
     });
+  }
+
+  private _drawRoads(): void {
+    this._ctx.save();
+    this._ctx.translate(this._centerPoint.x, this._centerPoint.y);
+    const roads = [this.north, this.east, this.south, this.west];
+    this._ctx.strokeStyle = "#785629";
+    this._ctx.lineWidth = 16;
+
+    
+      roads.forEach((road) => {
+        if (road.is_road) {
+          this._ctx.beginPath();
+          this._ctx.moveTo(0, 0);
+          this._ctx.lineTo((road._roadCoord.x * this._gridOptions.tileSize) / 2, (road._roadCoord.y * this._gridOptions.tileSize) / 2);
+          this._ctx.stroke();
+      }
+    })
+    this._ctx.strokeStyle = "#b8a570";
+    this._ctx.lineWidth = 8;
+    roads.forEach((road) => {
+      if (road.is_road) {
+        this._ctx.beginPath();
+        this._ctx.moveTo(0, 0);
+        this._ctx.lineTo(
+          (road._roadCoord.x * this._gridOptions.tileSize) / 2,
+          (road._roadCoord.y * this._gridOptions.tileSize) / 2
+        );
+        this._ctx.stroke();
+      }
+    });
+    this._ctx.restore();
   }
 }
