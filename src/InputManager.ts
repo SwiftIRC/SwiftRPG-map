@@ -12,6 +12,13 @@ export class InputManager {
 
   public scale = 1;
 
+  private ArrowKeyMap: Map<KeyboardEvent["key"], Coordinate> = new Map([
+    ["ArrowUp", { x: 0, y: 1 }],
+    ["ArrowDown", { x: 0, y: -1 }],
+    ["ArrowLeft", { x: -1, y: 0 }],
+    ["ArrowRight", { x: 1, y: 0 }],
+  ]);
+
   constructor(center: Coordinate) {
     this.offset = center;
   }
@@ -40,5 +47,10 @@ export class InputManager {
     if (this._isMouseDown) {
       this.offset = { x: event.clientX, y: event.clientY + this._fixY };
     }
+  }
+
+  onKeyDown(event: KeyboardEvent) {
+    this.offset.x += this.ArrowKeyMap.get(event.key)!.x * 5;
+    this.offset.y += this.ArrowKeyMap.get(event.key)!.y * 5;
   }
 }

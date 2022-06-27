@@ -36,14 +36,14 @@ export class CanvasManager {
     this._background = background;
     tileData.forEach((tile) => {
       const tileEdgeMap = new Map<TileEdgeDirection, TileEdge>();
-      tile.edges.forEach(edge => {
+      tile.edges.forEach((edge) => {
         tileEdgeMap.set(edge.pivot.direction, {
           name: edge.name,
           is_road: edge.pivot.is_road,
           direction: edge.pivot.direction,
           _roadCoord: TileEdgeDirectionMap[edge.pivot.direction],
         });
-      })
+      });
       this._tiles.push(
         new Tile(
           this._ctx,
@@ -78,6 +78,10 @@ export class CanvasManager {
     this._canvas.addEventListener("mouseup", (e: MouseEvent) =>
       this._inputManager.onMouseUp(e)
     );
+    window.addEventListener("keydown", (e: KeyboardEvent) =>
+      this._inputManager.onKeyDown(e),
+      true
+    );
   }
 
   draw(deltaTime: number = 0): void {
@@ -95,7 +99,7 @@ export class CanvasManager {
         tile.drawTrees();
       });
       //this.drawFPS(1000 / newDeltaTime);
-      this._frameCount++
+      this._frameCount++;
     }
     window.requestAnimationFrame(() => this.draw(newDeltaTime));
   }
@@ -143,8 +147,8 @@ export class CanvasManager {
     const mappedX = this._inputManager.offset.x - this._canvas.width / 2;
     const mappedY = this._inputManager.offset.y - this._canvas.height / 2;
     return {
-      x:  this.centerPoint.x + mappedX,
-      y:  this.centerPoint.y + mappedY,
+      x: this.centerPoint.x + mappedX,
+      y: this.centerPoint.y + mappedY,
     };
   }
 }
