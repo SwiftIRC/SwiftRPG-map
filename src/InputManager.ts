@@ -3,6 +3,7 @@ import { Coordinate } from "./types";
 export class InputManager {
   private _isMouseDown: boolean = false;
   public offset: Coordinate = { x: 0, y: 0 };
+  private _mouseLastPos: Coordinate = { x: 0, y: 0 };
   private _wheelSensitivity = 0.0003;
   private _minScale = 0.009;
   // For some reason the click event seems to be about 87 px off.
@@ -37,6 +38,7 @@ export class InputManager {
   onMouseDown(event: MouseEvent) {
     console.log("Clicked: " + event.clientX + "," + (event.clientY + this._fixY));
     this._isMouseDown = true;
+    this._mouseLastPos = { x: event.clientX, y: event.clientY + this._fixY };
   }
 
   onMouseUp(event: MouseEvent) {
@@ -45,7 +47,8 @@ export class InputManager {
 
   onMouseMove(event: MouseEvent) {
     if (this._isMouseDown) {
-      this.offset = { x: event.clientX, y: event.clientY + this._fixY };
+      this.offset = {x: this.offset.x + (event.clientX - this._mouseLastPos.x), y: this.offset.y + (event.clientY + this._fixY - this._mouseLastPos.y)};
+      this._mouseLastPos = { x: event.clientX, y: event.clientY + this._fixY };
     }
   }
 
