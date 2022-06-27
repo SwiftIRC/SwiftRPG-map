@@ -1,5 +1,6 @@
 import { SVGTree } from "./SVG";
-import { Coordinate, GridOptions, TileEdge, Tree } from "./types";
+import { Coordinate, GridOptions, TileEdge, TileTerrainType, Tree } from "./types";
+import MapConfig from "./MapConfig";
 
 export class Tile {
   private _ctx: CanvasRenderingContext2D;
@@ -16,6 +17,7 @@ export class Tile {
   public readonly south: TileEdge;
   public readonly west: TileEdge;
   private _gridOptions: GridOptions;
+  public terrain: TileTerrainType;
 
   constructor(
     ctx: CanvasRenderingContext2D,
@@ -30,6 +32,7 @@ export class Tile {
     east: TileEdge,
     south: TileEdge,
     west: TileEdge,
+    terrain: TileTerrainType,
     gridOptions: GridOptions
   ) {
     this._ctx = ctx;
@@ -44,6 +47,7 @@ export class Tile {
     this.east = east;
     this.south = south;
     this.west = west;
+    this.terrain = terrain;
     this._gridOptions = gridOptions;
     this.treeMap = this._gerateTreeMap();
   }
@@ -64,15 +68,13 @@ export class Tile {
   }
 
   public draw(): void {
-    this._ctx.fillStyle = "#72ad51";
+    this._ctx.fillStyle = MapConfig.colors["grass"];
     this._ctx.fillRect(
       this._getMappedPosition().x,
       this._getMappedPosition().y,
       this._gridOptions.tileSize,
       this._gridOptions.tileSize
     );
-    this._drawRoads();
-    this._drawTrees();
   }
 
   private get _centerPoint(): Coordinate {
@@ -95,7 +97,7 @@ export class Tile {
     };
   }
 
-  private _drawTrees(): void {
+  public drawTrees(): void {
     this.treeMap.forEach((tree) => {
       this._ctx.save();
       this._ctx.translate(
@@ -110,22 +112,24 @@ export class Tile {
     });
   }
 
-  private _drawRoads(): void {
+  public drawRoads(): void {
     this._ctx.save();
     this._ctx.translate(this._centerPoint.x, this._centerPoint.y);
     const roads = [this.north, this.east, this.south, this.west];
     this._ctx.strokeStyle = "#785629";
     this._ctx.lineWidth = 16;
 
-    
-      roads.forEach((road) => {
-        if (road.is_road) {
-          this._ctx.beginPath();
-          this._ctx.moveTo(0, 0);
-          this._ctx.lineTo((road._roadCoord.x * this._gridOptions.tileSize) / 2, (road._roadCoord.y * this._gridOptions.tileSize) / 2);
-          this._ctx.stroke();
+    roads.forEach((road) => {
+      if (road.is_road) {
+        this._ctx.beginPath();
+        this._ctx.moveTo(0, 0);
+        this._ctx.lineTo(
+          (road._roadCoord.x * this._gridOptions.tileSize) / 2,
+          (road._roadCoord.y * this._gridOptions.tileSize) / 2
+        );
+        this._ctx.stroke();
       }
-    })
+    });
     this._ctx.strokeStyle = "#b8a570";
     this._ctx.lineWidth = 8;
     roads.forEach((road) => {

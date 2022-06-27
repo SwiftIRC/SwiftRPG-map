@@ -22,6 +22,7 @@ export class CanvasManager {
   private _frameRate: number = 60;
   private _lastFrameTime: number = performance.now() - 1000;
   public _isplaying: boolean = true;
+  public _frameCount: number = 0;
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -57,6 +58,7 @@ export class CanvasManager {
           tileEdgeMap.get("east") as TileEdge,
           tileEdgeMap.get("south") as TileEdge,
           tileEdgeMap.get("west") as TileEdge,
+          tile.terrain,
           this.gridOptions
         )
       );
@@ -76,7 +78,6 @@ export class CanvasManager {
     this._canvas.addEventListener("mouseup", (e: MouseEvent) =>
       this._inputManager.onMouseUp(e)
     );
-    console.log(this._tiles);
   }
 
   draw(deltaTime: number = 0): void {
@@ -88,8 +89,13 @@ export class CanvasManager {
       this._lastFrameTime = performance.now();
       this._tiles.forEach((tile) => {
         tile.draw();
+        tile.drawRoads();
+      });
+      this._tiles.forEach((tile) => {
+        tile.drawTrees();
       });
       //this.drawFPS(1000 / newDeltaTime);
+      this._frameCount++
     }
     window.requestAnimationFrame(() => this.draw(newDeltaTime));
   }

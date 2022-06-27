@@ -3,6 +3,15 @@ export type Coordinate = {
   y: number;
 };
 
+export type TileTerrainType = "grass" | "water" | "forest" | "dirt" ;
+
+export const TerrainColorMap: Map<TileTerrainType, string> = new Map([
+  ["grass", "#72ad51"],
+  ["water", "#34a8eb"],
+  ["forest", "#378a5c"],
+  ["dirt", "#8a6237"],
+]);
+
 export type TileEdgeDirection = "north" | "east" | "south" | "west";
 
 export type TileAPIResponse = {
@@ -13,6 +22,7 @@ export type TileAPIResponse = {
   available_trees: number;
   npcs: number;
   buildings: number;
+  terrain: TileTerrainType;
   edges: [
     {
       name: string;

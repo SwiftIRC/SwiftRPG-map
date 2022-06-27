@@ -17,7 +17,6 @@ export class InputManager {
   }
 
   onWheel(event: WheelEvent) {
-    console.log("Curent Scale: " + this.scale);
     if (this.scale + (this._wheelSensitivity * event.deltaY) > this._minScale) {
       this.scale += (this._wheelSensitivity * this.scale) * event.deltaY;
     }
@@ -30,7 +29,6 @@ export class InputManager {
 
   onMouseDown(event: MouseEvent) {
     console.log("Clicked: " + event.clientX + "," + (event.clientY + this._fixY));
-    this.offset = { x: event.clientX, y: event.clientY + this._fixY };
     this._isMouseDown = true;
   }
 
