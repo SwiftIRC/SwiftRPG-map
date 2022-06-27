@@ -78,8 +78,9 @@ export class CanvasManager {
     this._canvas.addEventListener("mouseup", (e: MouseEvent) =>
       this._inputManager.onMouseUp(e)
     );
-    window.addEventListener("keydown", (e: KeyboardEvent) =>
-      this._inputManager.onKeyDown(e),
+    window.addEventListener(
+      "keydown",
+      (e: KeyboardEvent) => this._inputManager.onKeyDown(e),
       true
     );
   }
@@ -88,7 +89,10 @@ export class CanvasManager {
     const newDeltaTime = performance.now() - this._lastFrameTime;
     if (this._isplaying && deltaTime >= 1000 / this._frameRate) {
       this.clear();
-      this._ctx.translate(this.cameraPan().x, this.cameraPan().y);
+      this._ctx.translate(
+        this._inputManager.offset.x,
+        this._inputManager.offset.y
+      );
       this._ctx.scale(this._inputManager.scale, this._inputManager.scale);
       this._lastFrameTime = performance.now();
       this._tiles.forEach((tile) => {
@@ -98,7 +102,7 @@ export class CanvasManager {
       this._tiles.forEach((tile) => {
         tile.drawTrees();
       });
-      //this.drawFPS(1000 / newDeltaTime);
+      this._drawDebug(newDeltaTime);
       this._frameCount++;
     }
     window.requestAnimationFrame(() => this.draw(newDeltaTime));
@@ -125,17 +129,25 @@ export class CanvasManager {
     this._ctx.resetTransform();
   }
 
-  drawFPS(fps: number): void {
+  private _drawFPS(fps: number): void {
     this._ctx.resetTransform();
     this._ctx.font = "8px Arial";
-    this._ctx.fillStyle = "purple";
+    this._ctx.fillStyle = "white";
     this._ctx.fillText(`FPS: ${Math.round(fps)}`, 10, 10);
     this._ctx.restore();
   }
 
-  private _drawDebug(): void {
-    this._ctx.strokeStyle = "purple";
-    this._ctx.strokeRect(0, 0, this._canvas.width, this._canvas.height);
+  private _drawCurrentOffset(): void {
+    this._ctx.resetTransform();
+    this._ctx.font = "8px Arial";
+    this._ctx.fillStyle = "white";
+    this._ctx.fillText(JSON.stringify(this.cameraPan), 10, 20);
+    this._ctx.restore();
+  }
+
+  private _drawDebug(newDeltaTime: number): void {
+    this._drawFPS(1000 / newDeltaTime);
+    this._drawCurrentOffset();
   }
 
   drawBackground(): void {
@@ -143,12 +155,12 @@ export class CanvasManager {
     this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
   }
 
-  private cameraPan(): Coordinate {
+  private get cameraPan(): Coordinate {
     const mappedX = this._inputManager.offset.x - this._canvas.width / 2;
     const mappedY = this._inputManager.offset.y - this._canvas.height / 2;
     return {
-      x: this.centerPoint.x + mappedX,
-      y: this.centerPoint.y + mappedY,
+      x: mappedX,
+      y: mappedY,
     };
   }
 }
