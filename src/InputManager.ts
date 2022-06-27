@@ -28,7 +28,7 @@ export class InputManager {
     if (this.scale + (this._wheelSensitivity * event.deltaY) > this._minScale) {
       this.scale -= (this._wheelSensitivity * this.scale) * event.deltaY;
     }
-    
+
   }
 
   get isMouseDown() {
@@ -40,13 +40,13 @@ export class InputManager {
     this._mouseLastPos = { x: event.clientX, y: event.clientY + this._fixY };
   }
 
-  onMouseUp(event: MouseEvent) {
+  onMouseUp() {
     this._isMouseDown = false;
   }
 
   onMouseMove(event: MouseEvent) {
     if (this._isMouseDown) {
-      this.offset = {x: this.offset.x + (event.clientX - this._mouseLastPos.x), y: this.offset.y + (event.clientY + this._fixY - this._mouseLastPos.y)};
+      this.offset = { x: this.offset.x + (event.clientX - this._mouseLastPos.x), y: this.offset.y + (event.clientY + this._fixY - this._mouseLastPos.y) };
       this._mouseLastPos = { x: event.clientX, y: event.clientY + this._fixY };
     }
   }

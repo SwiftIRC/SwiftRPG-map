@@ -75,8 +75,8 @@ export class CanvasManager {
     this._canvas.addEventListener("mousedown", (e: MouseEvent) =>
       this._inputManager.onMouseDown(e)
     );
-    this._canvas.addEventListener("mouseup", (e: MouseEvent) =>
-      this._inputManager.onMouseUp(e)
+    this._canvas.addEventListener("mouseup", () =>
+      this._inputManager.onMouseUp()
     );
     window.addEventListener(
       "keydown",
@@ -116,12 +116,12 @@ export class CanvasManager {
     return coord;
   }
 
-  // Draw a dot on the center of the canvas
-  private _drawCenterPoint(size: number, color: string): void {
-    this._ctx.fillStyle = color;
-    this._ctx.fillRect(this.centerPoint.x, this.centerPoint.y, size, size);
-    this._ctx.fill();
-  }
+  // // Draw a dot on the center of the canvas
+  // private _drawCenterPoint(size: number, color: string): void {
+  //   this._ctx.fillStyle = color;
+  //   this._ctx.fillRect(this.centerPoint.x, this.centerPoint.y, size, size);
+  //   this._ctx.fill();
+  // }
 
   clear(): void {
     this._ctx.resetTransform();

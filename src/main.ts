@@ -20,7 +20,7 @@ export class App {
     this._canvas.width = this.container.getBoundingClientRect().width;
     this._canvas.height = this.container.getBoundingClientRect().height;
     this._canvasManager = new CanvasManager(this._canvas, this._canvas.getContext('2d')!, "#8f7f67", tileData)
-  } 
+  }
 
   static async start(container: HTMLElement, document: Document): Promise<App> {
     const tileDataRequest = await axios.get(`${import.meta.env.VITE_APP_API_BASE_URL}/api/tiles`)
@@ -36,8 +36,9 @@ export class App {
 
 async function main(): Promise<void> {
   const appContainer = document.querySelector<HTMLDivElement>('#app')!
-  const app = await App.start(appContainer, document)
+  await App.start(appContainer, document)
   console.log("App Loaded")
+
 }
 
 main();
