@@ -1,0 +1,18 @@
+{
+  "prefix": "map",
+  "path": "assets/images",
+  "files": [
+    {
+      "key": "tree-top",
+      "type": "image",
+      "extension": "svg",
+      "url": "../assets/images/tree-top.svg"
+    },
+    {
+      "key": "tree-trunk",
+      "type": "image",
+      "extension": "svg",
+      "url": "../assets/images/tree-trunk.svg"
+    }
+  ]
+}

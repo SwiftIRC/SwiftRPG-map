@@ -4,8 +4,8 @@ export class InputManager {
   private _isMouseDown: boolean = false;
   public offset: Coordinate = { x: 0, y: 0 };
   private _mouseLastPos: Coordinate = { x: 0, y: 0 };
-  private _wheelSensitivity = 0.0003;
-  private _minScale = 0.009;
+  private _wheelSensitivity = 0.0002;
+  private _minScale = 0.0009;
   // For some reason the click event seems to be about 87 px off.
   // This is likely a bug that differs between different screens and devices.
   // This is a workaround to get the correct click position temporarily
@@ -24,12 +24,12 @@ export class InputManager {
     this.offset = center;
   }
 
-  onWheel(event: WheelEvent) {
-    if (this.scale + (this._wheelSensitivity * event.deltaY) > this._minScale) {
-      this.scale -= (this._wheelSensitivity * this.scale) * event.deltaY;
-    }
-
-  }
+  // onWheel(event: WheelEvent) {
+  //   console.log("mouse wheel");
+  //   if (this.scale + (this._wheelSensitivity * event.deltaY) > this._minScale) {
+  //     this.scale -= (this._wheelSensitivity * this.scale) * event.deltaY;
+  //   }
+  // }
 
   get isMouseDown() {
     return this._isMouseDown;
