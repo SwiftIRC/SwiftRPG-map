@@ -45,7 +45,7 @@ export type TerrainAPIResponse = {
   description: string;
 };
 
-export type TileTerrainType = "Grass" | "Water" | "Sand" | "Dirt";
+export type TileTerrainType = "Grass" | "Water" | "Sand" | "Forest" | "Mountains";
 
 export const TileTerrainTypeMap: { [key in TileTerrainType]: TileTerrainObject } = {
   Grass: {
@@ -60,10 +60,14 @@ export const TileTerrainTypeMap: { [key in TileTerrainType]: TileTerrainObject }
     name: "Sand",
     color: 0xc2b280,
   },
-  Dirt: {
-    name: "Dirt",
-    color: 0x8a6237,
+  Forest: {
+    name: "Forest",
+    color: 0x23904F,
   },
+  Mountains: {
+    name: "Mountains",
+    color: 0x5f6a78,
+  }
 };
 
 type TileTerrainObject = {
