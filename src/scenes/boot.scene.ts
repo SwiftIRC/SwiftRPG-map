@@ -7,6 +7,8 @@ import {
   TileEdgeDirectionMap,
 } from "../types/index.types";
 import { GridManager } from "../utils/GridManager";
+import treeTop from '/assets/images/tree-top.svg';
+import treeTrunk from '/assets/images/tree-trunk.svg';
 
 export class BootScene extends Phaser.Scene {
   gridManager: GridManager;
@@ -59,14 +61,14 @@ export class BootScene extends Phaser.Scene {
     const textObj = this.add.text(50, 50, "Loading Assets");
     this.load.svg({
       key: "tree-top",
-      url: "assets/images/tree-top.svg",
+      url: treeTop,
       svgConfig: {
         scale: 3,
       },
     });
     this.load.svg({
       key: "tree-trunk",
-      url: "assets/images/tree-trunk.svg",
+      url: treeTrunk,
       svgConfig: {
         scale: 3
       },
