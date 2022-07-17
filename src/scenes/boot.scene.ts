@@ -57,6 +57,7 @@ export class BootScene extends Phaser.Scene {
   preload() {
     console.log("Boot Scene Loaded");
     const textObj = this.add.text(50, 50, "Loading Assets");
+    // this.load.pack("assets", "packs/map.pack.json", "assets")
     this.load.svg({
       key: "tree-top",
       url: "assets/images/tree-top.svg",
@@ -71,6 +72,12 @@ export class BootScene extends Phaser.Scene {
         scale: 3
       },
     });
+    this.load.image("grass", "assets/images/grasstile.png");
+    this.load.image("dirt", "assets/images/dirttile.png");
+    this.load.image("water", "assets/images/watertile.png");
+    this.load.image("sand", "assets/images/sandtile.png");
+    this.load.image("mountains", "assets/images/mountaintile.png");
+    this.load.image("forest", "assets/images/foresttile.png");
     textObj.destroy();
   }
 

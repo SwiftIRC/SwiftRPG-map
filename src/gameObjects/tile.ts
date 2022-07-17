@@ -1,6 +1,6 @@
 import { TileEdge, TileTerrainType, TileTerrainTypeMap, Tree } from "../types/index.types";
 
-export class Tile extends Phaser.GameObjects.Rectangle {
+export class Tile extends Phaser.GameObjects.Image {
   private _available_trees: number;
   private readonly _max_trees: number;
   public readonly gridPos: Phaser.Math.Vector2;
@@ -33,8 +33,11 @@ export class Tile extends Phaser.GameObjects.Rectangle {
     west: TileEdge,
 
   ) {
-    super(scene, mapPos.x, mapPos.y, size, size, TileTerrainTypeMap[terrain].color);
+    super(scene, mapPos.x, mapPos.y, TileTerrainTypeMap[terrain].texture);
+    this.setOrigin(0.25, 0.25);
     this.size = size;
+    this.displayHeight = size;
+    this.displayWidth = size;
     this.gridPos = gridPos;
     this.mapPos = mapPos;
     this._available_trees = available_trees;
@@ -48,7 +51,6 @@ export class Tile extends Phaser.GameObjects.Rectangle {
     this.east = east;
     this.south = south;
     this.west = west;
-    console.log(this.treeMap);
   }
   private _gerateTreeMap(): Tree[] {
     const treeMap: Tree[] = [];

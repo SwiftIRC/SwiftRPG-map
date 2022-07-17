@@ -13,6 +13,42 @@
       "type": "image",
       "extension": "svg",
       "url": "../assets/images/tree-trunk.svg"
+    },
+    {
+      "key": "grass",
+      "type": "image",
+      "extension": "png",
+      "url": "../assets/images/grasstile.png"
+    },
+    {
+      "key": "water",
+      "type": "image",
+      "extension": "png",
+      "url": "../assets/images/watertile.png"
+    },
+    {
+      "key": "sand",
+      "type": "image",
+      "extension": "png",
+      "url": "../assets/images/sandtile.png"
+    },
+    {
+      "key": "dirt",
+      "type": "image",
+      "extension": "png",
+      "url": "../assets/images/dirttile.png"
+    },
+    {
+      "key": "forrest",
+      "type": "image",
+      "extension": "png",
+      "url": "../assets/images/forresttile.png"
+    },
+    {
+      "key": "mountains",
+      "type": "image",
+      "extension": "png",
+      "url": "../assets/images/mountaintile.png"
     }
   ]
 }

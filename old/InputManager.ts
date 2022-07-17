@@ -24,13 +24,6 @@ export class InputManager {
     this.offset = center;
   }
 
-  // onWheel(event: WheelEvent) {
-  //   console.log("mouse wheel");
-  //   if (this.scale + (this._wheelSensitivity * event.deltaY) > this._minScale) {
-  //     this.scale -= (this._wheelSensitivity * this.scale) * event.deltaY;
-  //   }
-  // }
-
   get isMouseDown() {
     return this._isMouseDown;
   }

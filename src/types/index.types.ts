@@ -45,30 +45,45 @@ export type TerrainAPIResponse = {
   description: string;
 };
 
-export type TileTerrainType = "Grass" | "Water" | "Sand" | "Dirt";
+export type TileTerrainType = "Grass" | "Water" | "Sand" | "Dirt" | "Mountains" | "Forest";
 
 export const TileTerrainTypeMap: { [key in TileTerrainType]: TileTerrainObject } = {
   Grass: {
     name: "Grass",
     color: 0x72ad51,
+    texture: "grass",
   },
   Water: {
     name: "Water",
     color: 0x34a8eb,
+    texture: "water",
   },
   Sand: {
     name: "Sand",
     color: 0xc2b280,
+    texture: "sand",
   },
   Dirt: {
     name: "Dirt",
     color: 0x8a6237,
+    texture: "dirt",
   },
+  Mountains: {
+    name: "Mountains",
+    color: 0x8a6237,
+    texture: "mountains",
+  },
+  Forest: {
+    name: "Forest",
+    color: 0x8a6237,
+    texture: "forest",
+  }
 };
 
 type TileTerrainObject = {
   name: keyof typeof TileTerrainTypeMap;
   color: number;
+  texture: string;
 }
 
 export type TileEdgeDirection = "north" | "east" | "south" | "west";

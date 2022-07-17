@@ -47,7 +47,6 @@ export class MapScene extends Phaser.Scene {
   }
 
   private _drawTrees(): void {
-    console.log("Drawing Trees");
     this._tiles.forEach((tile) => {
       tile.treeMap.forEach((tree) => {
           this.add.sprite(
