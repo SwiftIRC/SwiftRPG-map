@@ -9,6 +9,12 @@ import {
 import { GridManager } from "../utils/GridManager";
 import treeTop from '/assets/images/tree-top.svg';
 import treeTrunk from '/assets/images/tree-trunk.svg';
+import grassTile from '/assets/images/grasstile.png';
+import dirtTile from "/assets/images/dirttile.png";
+import waterTile from "/assets/images/watertile.png";
+import sandTile from "/assets/images/sandtile.png";
+import mountainsTile from "/assets/images/mountaintile.png";
+import forestTile from "/assets/images/foresttile.png";
 
 export class BootScene extends Phaser.Scene {
   gridManager: GridManager;
@@ -74,12 +80,12 @@ export class BootScene extends Phaser.Scene {
         scale: 3
       },
     });
-    this.load.image("grass", "assets/images/grasstile.png");
-    this.load.image("dirt", "assets/images/dirttile.png");
-    this.load.image("water", "assets/images/watertile.png");
-    this.load.image("sand", "assets/images/sandtile.png");
-    this.load.image("mountains", "assets/images/mountaintile.png");
-    this.load.image("forest", "assets/images/foresttile.png");
+    this.textures.addBase64("grass", grassTile);
+    this.textures.addBase64("dirt", dirtTile);
+    this.textures.addBase64("water", waterTile);
+    this.textures.addBase64("sand", sandTile);
+    this.textures.addBase64("mountains", mountainsTile);
+    this.textures.addBase64("forest", forestTile);
     textObj.destroy();
   }
 
