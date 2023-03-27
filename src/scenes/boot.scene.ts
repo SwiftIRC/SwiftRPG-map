@@ -7,9 +7,9 @@ import {
   TileEdgeDirectionMap,
 } from "../types/index.types";
 import { GridManager } from "../utils/GridManager";
-import treeTop from '/assets/images/tree-top.svg';
-import treeTrunk from '/assets/images/tree-trunk.svg';
-import grassTile from '/assets/images/grasstile.png';
+import treeTop from "/assets/images/tree-top.svg";
+import treeTrunk from "/assets/images/tree-trunk.svg";
+import grassTile from "/assets/images/grasstile.png";
 import dirtTile from "/assets/images/dirttile.png";
 import waterTile from "/assets/images/watertile.png";
 import sandTile from "/assets/images/sandtile.png";
@@ -65,7 +65,7 @@ export class BootScene extends Phaser.Scene {
   preload() {
     console.log("Boot Scene Loaded");
     const textObj = this.add.text(50, 50, "Loading Assets");
-    // this.load.pack("assets", "packs/map.pack.json", "assets")
+
     this.load.svg({
       key: "tree-top",
       url: treeTop,
@@ -77,7 +77,7 @@ export class BootScene extends Phaser.Scene {
       key: "tree-trunk",
       url: treeTrunk,
       svgConfig: {
-        scale: 3
+        scale: 3,
       },
     });
     this.textures.addBase64("grass", grassTile);
