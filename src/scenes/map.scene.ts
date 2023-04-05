@@ -43,7 +43,20 @@ export class MapScene extends Phaser.Scene {
       this.inputManager.onMouseMove(this.cameras.main, _pointer)
     );
     this._drawRoads();
+    this._drawPlayers();
     this._drawTrees();
+  }
+
+  private _drawPlayers(): void {
+    this._tiles.forEach((tile) => {
+      tile.users.forEach((user) => {
+        this.add.sprite(
+          tile.x + user.x - tile.width / 2,
+          tile.y + user.y - tile.height / 2,
+          "meeple"
+        );
+      });
+    });
   }
 
   private _drawTrees(): void {

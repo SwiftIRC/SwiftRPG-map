@@ -4,7 +4,8 @@ export type TileAPIResponse = {
   y: number;
   max_trees: number;
   available_trees: number;
-  npcs: number;
+  npcs: TileNPCResponse[];
+  users: TileUserResponse[];
   buildings: number;
   terrain: TerrainAPIResponse;
   edges: [
@@ -107,3 +108,19 @@ export type Tree = {
   y: number;
   is_cut: boolean;
 };
+
+export type TileUserResponse = { name: string; hitpoints: number };
+
+export type TileNPCResponse = {
+  firstName: string;
+  lastName: string;
+  species: string;
+  gender: string;
+  occupation: string;
+}
+
+
+export interface TileUser extends TileUserResponse  {
+  x: number;
+  y: number;
+}

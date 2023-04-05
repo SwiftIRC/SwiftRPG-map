@@ -3,6 +3,12 @@
   "path": "assets/images",
   "files": [
     {
+      "key": "meeple",
+      "type": "image",
+      "extension": "png",
+      "url": "../assets/images/meeple-2.png"
+    },
+    {
       "key": "tree-top",
       "type": "image",
       "extension": "svg",

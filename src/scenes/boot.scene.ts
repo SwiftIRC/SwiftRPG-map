@@ -15,6 +15,7 @@ import waterTile from "/assets/images/watertile.png";
 import sandTile from "/assets/images/sandtile.png";
 import mountainsTile from "/assets/images/mountaintile.png";
 import forestTile from "/assets/images/foresttile.png";
+import meeple from "/assets/images/meeple-2.png";
 
 export class BootScene extends Phaser.Scene {
   gridManager: GridManager;
@@ -49,6 +50,7 @@ export class BootScene extends Phaser.Scene {
             tile.discovered_by,
             tile.max_trees,
             tile.npcs,
+            tile.users,
             tile.terrain.name,
             tileEdgeMap.get("north") as TileEdge,
             tileEdgeMap.get("east") as TileEdge,
@@ -80,6 +82,7 @@ export class BootScene extends Phaser.Scene {
         scale: 3,
       },
     });
+    this.textures.addBase64("meeple", meeple);
     this.textures.addBase64("grass", grassTile);
     this.textures.addBase64("dirt", dirtTile);
     this.textures.addBase64("water", waterTile);
