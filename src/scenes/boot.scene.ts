@@ -15,6 +15,7 @@ import waterTile from "/assets/images/watertile.png";
 import sandTile from "/assets/images/sandtile.png";
 import mountainsTile from "/assets/images/mountaintile.png";
 import forestTile from "/assets/images/foresttile.png";
+import fogTile from "/assets/images/fogtile.png";
 import meeple from "/assets/images/meeple-2.png";
 
 export class BootScene extends Phaser.Scene {
@@ -89,6 +90,7 @@ export class BootScene extends Phaser.Scene {
     this.textures.addBase64("sand", sandTile);
     this.textures.addBase64("mountains", mountainsTile);
     this.textures.addBase64("forest", forestTile);
+    this.textures.addBase64("fog", fogTile);
     textObj.destroy();
   }
 

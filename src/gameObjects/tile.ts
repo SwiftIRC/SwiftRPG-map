@@ -1,4 +1,12 @@
-import { TileEdge, TileNPCResponse, TileTerrainType, TileTerrainTypeMap, TileUser, TileUserResponse, Tree } from "../types/index.types";
+import {
+  TileEdge,
+  TileNPCResponse,
+  TileTerrainType,
+  TileTerrainTypeMap,
+  TileUser,
+  TileUserResponse,
+  Tree,
+} from "../types/index.types";
 
 export class Tile extends Phaser.GameObjects.Image {
   private _available_trees: number;
@@ -34,6 +42,11 @@ export class Tile extends Phaser.GameObjects.Image {
     south: TileEdge,
     west: TileEdge
   ) {
+    console.log(
+      terrain,
+      TileTerrainTypeMap[terrain],
+      TileTerrainTypeMap[terrain].texture
+    );
     super(scene, mapPos.x, mapPos.y, TileTerrainTypeMap[terrain].texture);
     this.setOrigin(0.25, 0.25);
     this.size = size;
@@ -69,13 +82,13 @@ export class Tile extends Phaser.GameObjects.Image {
     return treeMap;
   }
   private _generateUserMap(users: TileUserResponse[]): TileUser[] {
-   return users.map((user) => {
-    return {
-      name: user.name,
-      hitpoints: user.hitpoints,
-      x: Math.floor(Math.random() * this.size),
-      y: Math.floor(Math.random() * this.size),
-    }
-   });
+    return users.map((user) => {
+      return {
+        name: user.name,
+        hitpoints: user.hitpoints,
+        x: Math.floor(Math.random() * this.size),
+        y: Math.floor(Math.random() * this.size),
+      };
+    });
   }
 }

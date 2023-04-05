@@ -46,46 +46,47 @@ export type TerrainAPIResponse = {
   description: string;
 };
 
-export type TileTerrainType = "Grass" | "Water" | "Sand" | "Dirt" | "Mountains" | "Forest";
+export type TileTerrainType =
+  | "Fog"
+  | "Grass"
+  | "Water"
+  | "Sand"
+  | "Mountains"
+  | "Forest";
 
-export const TileTerrainTypeMap: { [key in TileTerrainType]: TileTerrainObject } = {
+export const TileTerrainTypeMap: {
+  [key in TileTerrainType]: TileTerrainObject;
+} = {
+  Fog: {
+    name: "Fog",
+    texture: "fog",
+  },
   Grass: {
     name: "Grass",
-    color: 0x72ad51,
     texture: "grass",
   },
   Water: {
     name: "Water",
-    color: 0x34a8eb,
     texture: "water",
   },
   Sand: {
     name: "Sand",
-    color: 0xc2b280,
     texture: "sand",
-  },
-  Dirt: {
-    name: "Dirt",
-    color: 0x8a6237,
-    texture: "dirt",
   },
   Mountains: {
     name: "Mountains",
-    color: 0x8a6237,
     texture: "mountains",
   },
   Forest: {
     name: "Forest",
-    color: 0x8a6237,
     texture: "forest",
-  }
+  },
 };
 
 type TileTerrainObject = {
   name: keyof typeof TileTerrainTypeMap;
-  color: number;
   texture: string;
-}
+};
 
 export type TileEdgeDirection = "north" | "east" | "south" | "west";
 
@@ -94,7 +95,7 @@ export const TileEdgeDirectionMap = {
   east: new Phaser.Math.Vector2(1, 0),
   south: new Phaser.Math.Vector2(0, 1),
   west: new Phaser.Math.Vector2(-1, 0),
-}
+};
 
 export type TileEdge = {
   name: string;
@@ -117,10 +118,9 @@ export type TileNPCResponse = {
   species: string;
   gender: string;
   occupation: string;
-}
+};
 
-
-export interface TileUser extends TileUserResponse  {
+export interface TileUser extends TileUserResponse {
   x: number;
   y: number;
 }
