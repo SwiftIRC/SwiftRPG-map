@@ -13,28 +13,7 @@ export type TileAPIResponse = {
       name: string;
       pivot: {
         is_road: boolean;
-        direction: "north";
-      };
-    },
-    {
-      name: string;
-      pivot: {
-        is_road: boolean;
-        direction: "east";
-      };
-    },
-    {
-      name: string;
-      pivot: {
-        is_road: boolean;
-        direction: "south";
-      };
-    },
-    {
-      name: string;
-      pivot: {
-        is_road: boolean;
-        direction: "west";
+        direction: TileEdgeDirection;
       };
     }
   ];
